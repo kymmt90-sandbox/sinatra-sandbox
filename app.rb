@@ -1,13 +1,16 @@
+require 'sinatra/base'
+require 'sinatra/reloader'
+
 require 'haml'
 require 'rack/rewrite'
 require 'rubygems'
-require 'sinatra/base'
-require 'sinatra/reloader'
+
+require 'padrino-core'
 require 'padrino-helpers'
 
 class App < Sinatra::Base
   enable :inline_templates
-  enable :logging
+  disable :logging
 
   configure :development do
     register Sinatra::Reloader
@@ -15,6 +18,8 @@ class App < Sinatra::Base
   end
 
   register Padrino::Helpers
+
+  use Padrino::Logger::Rack, '/'
 
   get '/' do
     haml :index
