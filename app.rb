@@ -1,4 +1,5 @@
 require 'haml'
+require 'rack/rewrite'
 require 'rubygems'
 require 'sinatra/base'
 
@@ -15,6 +16,10 @@ class App < Sinatra::Base
     @name = params[:name]
     @title = "Song for #{@name}"
     haml "#{@name}'s Way"
+  end
+
+  use Rack::Rewrite do
+    rewrite %r{^/song_for/(.*)}, '/name/$1'
   end
 end
 
