@@ -3,6 +3,7 @@ require 'rack/rewrite'
 require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'padrino-helpers'
 
 class App < Sinatra::Base
   enable :inline_templates
@@ -13,9 +14,10 @@ class App < Sinatra::Base
     set :server, 'webrick'
   end
 
+  register Padrino::Helpers
+
   get '/' do
-    @title = 'Top'
-    haml 'My Way'
+    haml :index
   end
 
   get '/name/:name' do
@@ -37,7 +39,14 @@ __END__
 !!! 5
 %html
  %head
-  %title=@title
+  %title= yield_content(:title) || @title
  %body
-  %h1=@title
+  %h1= yield_content(:header) || @title
   %div=yield
+
+@@ index
+- content_for :title do
+  This is title from helper
+- content_for :header do
+  This is header from helper
+%p My Way

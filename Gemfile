@@ -7,3 +7,5 @@ gem 'sinatra-contrib', '~> 1.4.6'
 gem 'haml', '~> 4.0.7'
 
 gem 'rack-rewrite', '~> 1.5.1'
+
+gem 'padrino', '~> 0.12.5'
