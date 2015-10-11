@@ -2,10 +2,16 @@ require 'haml'
 require 'rack/rewrite'
 require 'rubygems'
 require 'sinatra/base'
+require 'sinatra/reloader'
 
 class App < Sinatra::Base
   enable :inline_templates
   enable :logging
+
+  configure :development do
+    register Sinatra::Reloader
+    set :server, 'webrick'
+  end
 
   get '/' do
     @title = 'Top'
