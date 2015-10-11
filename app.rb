@@ -4,6 +4,7 @@ require 'sinatra/base'
 
 class App < Sinatra::Base
   enable :inline_templates
+  enable :logging
 
   get '/' do
     @title = 'Top'
