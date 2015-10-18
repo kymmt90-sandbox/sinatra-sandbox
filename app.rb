@@ -5,6 +5,7 @@ require 'haml'
 require 'rack/rewrite'
 require 'rubygems'
 
+require 'padrino-cache'
 require 'padrino-core'
 require 'padrino-helpers'
 
@@ -12,10 +13,10 @@ class App < Sinatra::Base
   enable :inline_templates
   disable :logging
 
-  configure :development do
-    register Sinatra::Reloader
-    set :server, 'webrick'
-  end
+  set :app_name, 'App'
+  register Padrino::Routing
+  register Padrino::Cache
+  enable :caching
 
   register Padrino::Helpers
 
@@ -29,6 +30,12 @@ class App < Sinatra::Base
     @name = params[:name]
     @title = "Song for #{@name}"
     haml "#{@name}'s Way"
+  end
+
+  get '/heavy_contents', :cache => true do
+    expires_in 60
+    sleep 5
+    'Process done!'
   end
 
   use Rack::Rewrite do
