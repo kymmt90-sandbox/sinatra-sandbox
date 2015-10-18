@@ -13,7 +13,7 @@ SampleBlog::App.controllers :posts do
   #   'Hello world!'
   # end
 
-  get :index do
+  get :index, :provides => [:html, :rss, :atom] do
     @posts = Post.all
     render 'posts/index'
   end
